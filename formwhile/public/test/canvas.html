@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <style>
+
+    </style>
+
+</head>
+<body>
+
+    <h1>Canvas Test</h1>
+    <div class="draw-area">
+		<div class="Menu">
+			<label>Brush Color </label>
+			<input type="color" id="brushColor">
+			<label>Brush Width </label>
+			<input type="range" id="brushWidth" min="3" max="20">
+			<label>Brush Opacity</label>
+			<input type="range" id="brushOpacity" min="1" max="100">
+	    </div>
+    </div>
+	<canvas id="canvas" width="1280" height="720"></canvas>
+
+<script>
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const brushColor = document.getElementById('brushColor');
+const brushWidth = document.getElementById('brushWidth');
+const brushOpacity = document.getElementById('brushOpacity');
+
+let isDrawing = false;
+
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mouseup', endDrawing);
+canvas.addEventListener('mousemove', draw);
+
+function startDrawing(e) {
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+    isDrawing = true;
+}
+
+function endDrawing() {
+    ctx.closePath();
+    isDrawing = false;
+}
+
+function draw(e) {
+    if (!isDrawing) return;
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.strokeStyle = brushColor.value;
+    ctx.lineWidth = brushWidth.value;
+    ctx.globalAlpha = brushOpacity.value / 100;
+    ctx.stroke();
+}
+
+</script>
+
+</body>
+</html>
