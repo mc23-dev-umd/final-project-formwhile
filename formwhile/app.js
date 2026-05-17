@@ -1,13 +1,16 @@
 const express = require('express');
 const supabaseClient = require('@supabase/supabase-js');
 
+const dotenv = require('dotenv');
+
 const app = express();
 const port = 3000;
+dotenv.config();
 
 app.use(express.static(__dirname + '/public'));
 
-const supabaseURL = "https://onggmqbozxlvvmwmwwfa.supabase.co";
-const supabaseKey = "sb_publishable__jS-xGq-ni2hf0MO3MxDCA_vM2RQjLk";
+const supabaseURL = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = supabaseClient.createClient(supabaseURL, supabaseKey);
 
 const COLOR_QUERY = [
